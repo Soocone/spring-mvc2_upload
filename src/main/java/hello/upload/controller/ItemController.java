@@ -76,12 +76,14 @@ public class ItemController {
 
         log.info("uploadFileName={}", uploadFileName);
 
+        // 인코딩을 해줘야함. 안그럼 한글이나 특문이 깨질 수 있음
         String encodedUploadFileName = UriUtils.encode(uploadFileName, StandardCharsets.UTF_8);
+
+        // 이게 있어야 다운로드 받음. 안그럼 클릭 시 파일이 그냥 http에서 열려버림
         String contentDisposition = "attachment; filename=\"" + encodedUploadFileName + "\"";
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
                 .body(resource);
     }
-
 }
